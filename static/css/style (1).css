@@ -1,0 +1,375 @@
+:root {
+    --myuki-icon-light-1: rgba(60, 60, 67);
+    --myuki-icon-light-2: rgba(60, 60, 67, .75);
+    --myuki-icon-dark-1: rgba(255, 255, 245, .86);
+    --myuki-icon-dark-2: rgba(235, 235, 245, .6);
+    --primary-color: #0d6efd;
+    --secondary-color: #6c757d;
+    --success-color: #198754;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #0dcaf0;
+    --light-color: #f8f9fa;
+    --dark-color: #212529;
+    --text-dark: #2f3542;
+    --text-light: #f1f2f6;
+    --text-muted: #747d8c;
+    --blur-radius: 5px;
+    --transition-duration: 0.3s;
+}
+
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+#particle-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-image: url('/jpg/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.5;
+    transition: opacity var(--transition-duration) ease;
+}
+
+.darkmode #particle-canvas {
+    opacity: 0.8;
+    filter: brightness(0.6);
+}
+
+.myuki-gcard_mask {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    transition: all var(--transition-duration) ease;
+    z-index: 9999;
+    box-sizing: border-box;
+}
+
+.myuki-gcard_mask.hidden {
+    display: none;
+}
+
+.blur {
+    filter: blur(var(--blur-radius));
+}
+
+.myuki-gcard_box {
+    min-width: 320px;
+    max-width: 480px;
+    box-sizing: border-box;
+    margin: 10% auto 0;
+    background-color: var(--text-light);
+    padding: 32px;
+    border-radius: 16px;
+    z-index: inherit;
+    animation: swing-in-top-fwd 1s cubic-bezier(0.175, 0.885, 0.320, 1.275) both;
+}
+
+.myuki-gcard_box.closed {
+    animation: swing-out-top-bck 0.6s cubic-bezier(0.600, -0.280, 0.735, 0.045) both;
+}
+
+.myuki-gcard_icon {
+    margin: 0 auto 8px;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    overflow: hidden;
+    transition: all calc(var(--transition-duration) + 0.1s) ease-in-out;
+}
+
+.myuki-gcard_icon:hover {
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+    transform: rotate(360deg);
+}
+
+.myuki-gcard_icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.myuki-gcard_title {
+    font-size: 1.3em;
+    font-weight: bold;
+    text-align: center;
+    color: var(--text-dark);
+    animation: tracking-in-expand 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+}
+
+.myuki-gcard_info {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: .8em;
+    animation: tracking-in-contract 0.8s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+    margin: 4px auto;
+}
+
+.myuki-gcard_hitokoto {
+    color: #70a1ff;
+}
+
+.myuki-gcard_runtime {
+    margin-top: 12px;
+    text-align: center;
+    font-size: 0.85em;
+    color: #ff6b81;
+}
+
+.myuki-gcard_box.darkmode .myuki-gcard_runtime {
+    color: #ff9aa2;
+}
+
+.myuki-gcard_btn-list {
+    padding: 8px;
+    white-space: nowrap;
+}
+
+.myuki-gcard_btn {
+    display: block;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    background-color: var(--secondary-color);
+    border-radius: 8px;
+    margin-bottom: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+    border: none;
+    outline: none;
+    transition: all var(--transition-duration) ease-in-out;
+    font-size: 1em;
+    padding: 8px;
+    overflow: hidden;
+}
+
+.myuki-gcard_btn:hover {
+    background-image: linear-gradient(90deg, #00C0FF 0%, #FFCF00 49%, #FC4F4F 80%, #00C0FF 100%);
+    animation: slidebg 2s linear infinite;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    box-shadow: 0 0 8px var(--primary-color);
+}
+
+.btn-success {
+    background-color: var(--success-color);
+}
+
+.btn-success:hover {
+    box-shadow: 0 0 8px var(--success-color);
+}
+
+.btn-info {
+    background-color: var(--info-color);
+}
+
+.btn-info:hover {
+    box-shadow: 0 0 8px var(--info-color);
+}
+
+.btn-close {
+    background-color: var(--text-light);
+    color: var(--secondary-color);
+    border: 2px solid var(--secondary-color);
+}
+
+.btn-close:hover {
+    background: var(--secondary-color);
+    color: white;
+}
+
+.myuki-gcard_mini {
+    position: fixed;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    overflow: hidden;
+    transition: all calc(var(--transition-duration) + 0.1s) ease-in-out;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 100%);
+    cursor: pointer;
+    z-index: 9999;
+}
+
+.myuki-gcard_mini.shown {
+    transform: translate(-50%, 0);
+}
+
+.myuki-gcard_mini:hover {
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+    transform: translate(-50%, 0) rotate(360deg);
+}
+
+.myuki-gcard_mini img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.myuki-gcard_icon-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 4px 0;
+}
+
+.myuki-gcard_icon-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    width: 32px;
+    height: 32px;
+    margin: 0 4px;
+    color: var(--myuki-icon-light-2);
+    transition: color var(--transition-duration) ease;
+    text-decoration: none;
+}
+
+.myuki-gcard_icon-item:hover {
+    color: var(--myuki-icon-light-1);
+    animation: jello 1s infinite;
+}
+
+.myuki-gcard_box.darkmode {
+    background-color: var(--text-dark);
+}
+
+.myuki-gcard_box.darkmode .myuki-gcard_title {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.myuki-gcard_box.darkmode .myuki-gcard_info {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.myuki-gcard_box.darkmode .myuki-gcard_icon:hover {
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+}
+
+.myuki-gcard_box.darkmode .btn-close {
+    background-color: #a4b0be;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.myuki-gcard_box.darkmode .myuki-gcard_icon-item {
+    color: var(--myuki-icon-dark-2);
+}
+
+.myuki-gcard_box.darkmode .myuki-gcard_icon-item:hover {
+    color: var(--myuki-icon-dark-1);
+}
+
+@media (max-width: 768px) {
+    .myuki-gcard_box {
+        width: 80%;
+        min-width: 80%;
+        max-width: 80%;
+    }
+    .myuki-gcard_runtime {
+        font-size: 0.75em;
+    }
+}
+
+@keyframes slidebg {
+    to {
+        background-position: 20vw;
+    }
+}
+
+@keyframes tracking-in-expand {
+    0% {
+        letter-spacing: -0.5em;
+        opacity: 0;
+    }
+    40% {
+        opacity: 0.6;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes tracking-in-contract {
+    0% {
+        letter-spacing: 1em;
+        opacity: 0;
+    }
+    40% {
+        opacity: 0.6;
+    }
+    100% {
+        letter-spacing: normal;
+        opacity: 1;
+    }
+}
+
+@keyframes swing-out-top-bck {
+    0% {
+        transform: rotateX(0deg);
+        transform-origin: top;
+        opacity: 1;
+    }
+    100% {
+        transform: rotateX(-120deg);
+        transform-origin: top;
+        opacity: 0;
+    }
+}
+
+@keyframes swing-in-top-fwd {
+    0% {
+        transform: rotateX(-140deg);
+        transform-origin: top;
+        opacity: 0;
+    }
+    100% {
+        transform: rotateX(0deg);
+        transform-origin: top;
+        opacity: 1;
+    }
+}
+
+@keyframes jello {
+    0%, 11.1%, to {
+        transform: translateZ(0)
+    }
+    22.2% {
+        transform: skewX(-12.5deg) skewY(-12.5deg)
+    }
+    33.3% {
+        transform: skewX(6.25deg) skewY(6.25deg)
+    }
+    44.4% {
+        transform: skewX(-3.125deg) skewY(-3.125deg)
+    }
+    55.5% {
+        transform: skewX(1.5625deg) skewY(1.5625deg)
+    }
+    66.6% {
+        transform: skewX(-.78125deg) skewY(-.78125deg)
+    }
+    77.7% {
+        transform: skewX(.390625deg) skewY(.390625deg)
+    }
+    88.8% {
+        transform: skewX(-.1953125deg) skewY(-.1953125deg)
+    }
+}
